@@ -1,0 +1,16 @@
+{
+  "locations": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "longitude": {
+      "type": "number",
+      "required": true
+    },
+    "latitude": {
+      "type": "number",
+      "required": true
+    }
+  }
+}
