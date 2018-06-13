@@ -12,5 +12,69 @@
       "type": "number",
       "required": true
     }
+  },
+  "givers": {
+    "type": {
+      "type": "string",
+      "required": true,
+      "enum": [ "person", "organization", "store" ]
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "contactName": {
+      "type": "string",
+      "required": true
+    },
+    "contactTitle": {
+      "type": "string",
+      "required": true,
+      "enum": [ "Mr.", "Ms." ]
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "events": {
+    "location": {
+      "type": "objectId",
+      "ref": "locations",
+      "required": true
+    },
+    "giver": {
+      "type": "objectId",
+      "ref": "givers",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "content": [{
+      "_id": {
+        "auto": false
+      },
+      "name": {
+        "type": "string",
+        "required": true
+      },
+      "amount": {
+        "type": "string",
+        "required": true
+      },
+      "description": {
+        "type": "string"
+      }
+    }],
+    "created": {
+      "type": "date",
+      "required": true
+    }
   }
 }
