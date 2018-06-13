@@ -3,6 +3,7 @@ const cors = require('cors');
 const express = require('express');
 const morgan = require('morgan');
 
+const { createError } = require('./lib/utils');
 const routes = require('./routes');
 
 const PORT = 5000
@@ -29,11 +30,7 @@ app.use(routes);
 
 /// Catch 404 and forward to error handler.
 app.use(function(req, res, next) {
-  const err = new Error('Not Found');
-
-  err.status = 404;
-
-  next(err);
+  next(createError(404, 'Not found'));
 });
 
 if (!isProduction) {

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+const { createError } = require('../lib/utils');
 const models = require('../models');
 
 async function getAllLocations(req, res, next) {
@@ -8,7 +9,7 @@ async function getAllLocations(req, res, next) {
 
     return res.send(result)
   } catch (err) {
-    return next(err)
+    return next(createError(500, null, err));
   }
 }
 
@@ -24,7 +25,7 @@ async function createDefaultLocations() {
       });
     }
   } catch (err) {
-    return next(err)
+    return next(createError(500, null, err));
   }
 }
 
