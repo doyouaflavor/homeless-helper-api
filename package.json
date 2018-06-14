@@ -7,8 +7,9 @@
   "author": "Su JiaKuan",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=production node server/server.js",
-    "dev": "nodemon server/server.js"
+    "dev": "NODE_ENV=development nodemon server/server.js",
+    "start": "NODE_ENV=production pm2 start server/server.js --name homeless-helper-api",
+    "stop": "NODE_ENV='production' pm2 delete homeless-helper-api -s &> /dev/null"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -22,6 +23,7 @@
     "validator": "^10.3.0"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5"
+    "nodemon": "^1.17.5",
+    "pm2": "^2.10.4"
   }
 }
