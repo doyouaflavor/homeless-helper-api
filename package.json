@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development nodemon server/server.js",
+    "docker-start": "NODE_ENV=production pm2-docker start server/server.js",
     "start": "NODE_ENV=production pm2 start server/server.js --name homeless-helper-api",
     "stop": "NODE_ENV='production' pm2 delete homeless-helper-api -s &> /dev/null"
   },

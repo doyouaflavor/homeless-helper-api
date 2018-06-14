@@ -1,0 +1,23 @@
+# Git
+.git*
+
+# Docker
+*Dockerfile*
+.dockerignore
+
+# Node.js
+node_modules
+
+# Auto-generated tag files
+tags
+
+# OSX
+.DS_Store
+
+# Vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
