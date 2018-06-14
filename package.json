@@ -7,8 +7,8 @@
   "author": "Su JiaKuan",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=production node app.js",
-    "dev": "nodemon app.js"
+    "start": "NODE_ENV=production node server/server.js",
+    "dev": "nodemon server/server.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
