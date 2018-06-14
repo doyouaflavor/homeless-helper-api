@@ -18,6 +18,7 @@ services:
         ipv4_address: 172.66.66.10
     ports:
       - 27017
+    restart: always
     volumes:
       - /data/homeless-helper-api/database:/data/db
 networks:
