@@ -5,6 +5,7 @@ const stringValidator = require('validator');
 const forEach = require('lodash/forEach');
 const isArray = require('lodash/isArray');
 const isString = require('lodash/isString');
+const isUndefined = require('lodash/isUndefined');
 const map = require('lodash/map');
 
 const models = require('../models');
@@ -15,8 +16,8 @@ const createEventsValidator = checkSchema({
   locationId: {
     custom: {
       options: async (id) => {
-        if (!isValidId(id)) {
-          throw new Error('Location ID format is not valid');
+        if (!isString(id) || !isValidId(id)) {
+          throw new Error('Unvalid format of location ID');
         }
 
         const result = await models.locations.findById(id);
@@ -97,6 +98,25 @@ const createEventsValidator = checkSchema({
   },
 })
 
+const checkValidIdIfExist = async (id) => {
+  if (!isUndefined(id) && (!isString(id) || !isValidId(id))) {
+    throw new Error('Unvalid format of location ID');
+  }
+}
+
+const queryEventsValidator = checkSchema({
+  locationId: {
+    custom: {
+      options: checkValidIdIfExist,
+    },
+  },
+  giverd: {
+    custom: {
+      options: checkValidIdIfExist,
+    },
+  },
+})
+
 async function createEvents(req, res, next) {
   try {
     const { locationId, giver, items } = req.body;
@@ -128,6 +148,32 @@ async function createEvents(req, res, next) {
   }
 }
 
+async function queryEvents(req, res, next) {
+  try {
+    const { locationId, giverId } = req.body;
+    const query = {}
+
+    // Add query filters.
+    if (locationId) {
+      query.location = locationId;
+    }
+    if (giverId) {
+      query.giver = giverId;
+    }
+
+    const list = await models.events.
+      find(query).
+      populate('location').
+      populate('giver').
+      exec();
+
+    res.send(list)
+  } catch (err) {
+    return next(createError(500, null, err));
+  }
+}
+
 router.post('/events', createEventsValidator, validate, createEvents);
+router.post('/events/query', queryEventsValidator, validate, queryEvents);
 
 module.exports = router;
