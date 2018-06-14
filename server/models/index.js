@@ -3,7 +3,8 @@ const forEach = require('lodash/forEach');
 
 const schemas = require('./schemas.json');
 
-const conn = mongoose.createConnection('mongodb://localhost:27017/homeless-helper');
+const DB_HOST = process.env.DB_HOST || 'localhost';
+const conn = mongoose.createConnection(`mongodb://${DB_HOST}:27017/homeless-helper`);
 const models = {}
 
 forEach(schemas, (value, key) => {

@@ -1,0 +1,29 @@
+version: "3"
+services:
+  api:
+    build: ./
+    image: homeless-helper/api:1.0.0
+    network_mode: host
+    ports:
+      - 5000
+    restart: always
+    depends_on:
+      - database
+    environment:
+      - DB_HOST=172.66.66.10
+  database:
+    image: mongo:3.6.5
+    networks:
+      db_net:
+        ipv4_address: 172.66.66.10
+    ports:
+      - 27017
+    volumes:
+      - /data/homeless-helper-api/database:/data/db
+networks:
+  db_net:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.66.66.0/24
