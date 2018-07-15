@@ -1,0 +1,12 @@
+const config = {
+  mailer: {
+    enabled: false,
+    name: '人生百味',
+    account: 'your-account@gmail.com',
+    clientId: 'your-client-id.apps.googleusercontent.com',
+    clientSecret: 'your-client-secrect',
+    refreshToken: 'your-refresh-token',
+  },
+}
+
+module.exports = config

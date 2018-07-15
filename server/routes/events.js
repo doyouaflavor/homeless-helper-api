@@ -10,6 +10,8 @@ const map = require('lodash/map');
 
 const models = require('../models');
 const { createError, validate, isValidId } = require('../lib/utils');
+const { sendMail } = require('../lib/mailer');
+const config = require('../../config');
 const { GIVER_TYPES, CONTACT_TITLES } = require('../const');
 
 const createEventsValidator = checkSchema({
@@ -118,8 +120,12 @@ const queryEventsValidator = checkSchema({
 })
 
 async function createEvents(req, res, next) {
+  let giver;
+
   try {
-    const { locationId, giver, items } = req.body;
+    const { locationId, items } = req.body;
+
+    giver = req.body.giver;
 
     // Insert giver record first.
     const { _id: giverId } = await models.givers.create(giver);
@@ -145,6 +151,18 @@ async function createEvents(req, res, next) {
     res.send(result);
   } catch (err) {
     return next(createError(500, null, err));
+  }
+
+  if (config.mailer.enabled) {
+    try {
+      await sendMail(
+        giver.email,
+        `Thank you, ${giver.name}`,
+        'Thank you',
+      );
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
 
