@@ -11,6 +11,7 @@ RUN mkdir ${HOME}/homeless-helper-api
 WORKDIR ${HOME}/homeless-helper-api
 COPY --chown=node:node package.json .
 COPY --chown=node:node yarn.lock .
+COPY --chown=node:node config.js .
 COPY --chown=node:node server server
 
 # Install packages.
