@@ -21,7 +21,7 @@
 * 回到憑證頁面，按下*OAuth 同意畫面*
 ![Go to OAuth Confirm Page](go-to-oauth-confirm.jpg)
 
-* 輸入*向使用者顯示的產品名稱*
+* 輸入*向使用者顯示的產品名稱*，按下*儲存*按鈕
 ![Modify OAuth confirm](modify-oauth-confirm.jpg)
 
 * 回到憑證頁面，按下*建立憑證* -> *OAuth 用戶端 ID*，以建立 OAuth 用戶端 ID
