@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+const ejs = require('ejs');
 const router = require('express').Router();
 const { checkSchema } = require('express-validator/check')
 const stringValidator = require('validator');
@@ -10,7 +13,13 @@ const map = require('lodash/map');
 
 const models = require('../models');
 const { createError, validate, isValidId } = require('../lib/utils');
+const { sendMail } = require('../lib/mailer');
+const config = require('../../config');
 const { GIVER_TYPES, CONTACT_TITLES } = require('../const');
+
+const mailTitle = '【無家者小幫手】感謝填寫物資分享日曆';
+const mailTemplatePath = path.join(__dirname, '../templates/mail.ejs');
+const mailTemplate = fs.readFileSync(mailTemplatePath, 'utf-8');
 
 const createEventsValidator = checkSchema({
   locationId: {
@@ -118,8 +127,12 @@ const queryEventsValidator = checkSchema({
 })
 
 async function createEvents(req, res, next) {
+  let giver;
+
   try {
-    const { locationId, giver, items } = req.body;
+    const { locationId, items } = req.body;
+
+    giver = req.body.giver;
 
     // Insert giver record first.
     const { _id: giverId } = await models.givers.create(giver);
@@ -145,6 +158,20 @@ async function createEvents(req, res, next) {
     res.send(result);
   } catch (err) {
     return next(createError(500, null, err));
+  }
+
+  if (config.mailer.enabled) {
+    try {
+      const mailContent = ejs.render(mailTemplate);
+
+      await sendMail(
+        giver.email,
+        mailTitle,
+        mailContent,
+      );
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
 

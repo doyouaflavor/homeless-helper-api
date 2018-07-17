@@ -82,3 +82,6 @@ Session.vim
 tags
 # Persistent undo
 [._]*.un~
+
+# The customized configuration files
+config.js

@@ -16,6 +16,11 @@
 yarn install
 ```
 
+* 複製設定檔 (如要啟動自動寄信，請參考[啟用自動寄信](mailer)之說明)
+```bash
+cp config.js.example config.js
+```
+
 * 以Development Mode啟動Server，當原始碼被修改時會自動重啟server
 ```bash
 yarn dev
@@ -37,6 +42,11 @@ yarn stop
 - [docker-compose](https://docs.docker.com/compose/)
 
 ### 步驟
+
+* 複製設定檔 (如要啟動自動寄信，請參考[啟用自動寄信](mailer)之說明)
+```bash
+cp config.js.example config.js
+```
 
 * 建立本專案的docker images
 ```bash
