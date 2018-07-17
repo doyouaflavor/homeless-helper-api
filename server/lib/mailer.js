@@ -14,13 +14,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendMail(to, subject, text) {
+async function sendMail(to, subject, html) {
   return new Promise((resolve, reject) => {
     const mailOpts = {
       from: `${mailer.name} <${mailer.account}>`,
       to,
       subject,
-      text,
+      html,
     };
 
     transporter.sendMail(mailOpts, (err) => {

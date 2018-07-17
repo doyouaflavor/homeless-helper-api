@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+const ejs = require('ejs');
 const router = require('express').Router();
 const { checkSchema } = require('express-validator/check')
 const stringValidator = require('validator');
@@ -13,6 +16,10 @@ const { createError, validate, isValidId } = require('../lib/utils');
 const { sendMail } = require('../lib/mailer');
 const config = require('../../config');
 const { GIVER_TYPES, CONTACT_TITLES } = require('../const');
+
+const mailTitle = '【無家者小幫手】感謝填寫物資分享日曆';
+const mailTemplatePath = path.join(__dirname, '../templates/mail.ejs');
+const mailTemplate = fs.readFileSync(mailTemplatePath, 'utf-8');
 
 const createEventsValidator = checkSchema({
   locationId: {
@@ -155,10 +162,12 @@ async function createEvents(req, res, next) {
 
   if (config.mailer.enabled) {
     try {
+      const mailContent = ejs.render(mailTemplate);
+
       await sendMail(
         giver.email,
-        `Thank you, ${giver.name}`,
-        'Thank you',
+        mailTitle,
+        mailContent,
       );
     } catch (err) {
       console.error(err);
