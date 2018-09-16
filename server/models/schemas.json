@@ -1,4 +1,18 @@
 {
+  "users": {
+    "username": {
+      "type": "string",
+      "required": true
+    },
+    "password": {
+      "type": "string",
+      "required": true
+    },
+    "admin": {
+      "type": "boolean",
+      "default": false
+    }
+  },
   "locations": {
     "name": {
       "type": "string",
