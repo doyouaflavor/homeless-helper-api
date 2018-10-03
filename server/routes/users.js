@@ -45,7 +45,7 @@ async function createUser(req, res, next) {
   }
 }
 
-async function authenticateUser (req, res, next) {
+async function authenticateUser(req, res, next) {
   try {
     const { username, password } = req.body;
     const user = await models.users.findOne({ username });
@@ -64,9 +64,26 @@ async function authenticateUser (req, res, next) {
   }
 }
 
+async function getProfile(req, res, next) {
+  try {
+    if (!req.profile) {
+      next(createError(401));
+    }
+
+    res.send({
+      id: req.profile._id,
+      username: req.profile.username,
+      admin: req.profile.admin,
+    });
+  } catch (err) {
+    next(createError(500, null, err));
+  }
+}
+
 createDefaultUsers();
 
 router.post('/users/register', createUser);
 router.post('/users/login', authenticateUser);
+router.get('/users/me', getProfile);
 
 module.exports = router;
