@@ -13,12 +13,14 @@
     "stop": "NODE_ENV='production' pm2 delete homeless-helper-api -s &> /dev/null"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-validator": "^5.2.0",
     "http-errors": "^1.6.3",
+    "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",
     "mongoose": "^5.1.5",
     "morgan": "^1.9.0",
