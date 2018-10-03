@@ -4,6 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 
 const { createError } = require('./lib/utils');
+const middlewares = require('./middlewares');
 const routes = require('./routes');
 
 const PORT = 5000
@@ -24,6 +25,11 @@ if (isProduction) {
 // Body parse.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Add custom middlewares.
+middlewares.forEach(function (middleware) {
+  app.use(middleware);
+});
 
 // Add custom routes.
 app.use(routes);
