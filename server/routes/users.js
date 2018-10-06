@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 
-const { SECRET_KEY } = require('../config');
+const config = require('../../config');
 const { createError } = require('../lib/utils');
 const models = require('../models');
 
@@ -37,7 +37,7 @@ async function createUser(req, res, next) {
         id: user._id,
         username: user.username,
         admin: user.admin,
-        token: jwt.sign({ id: user._id }, SECRET_KEY),
+        token: jwt.sign({ id: user._id }, config.server.secretKey),
       });
     }
   } catch (err) {
@@ -56,7 +56,7 @@ async function authenticateUser(req, res, next) {
         id: user._id,
         username: user.username,
         admin: user.admin,
-        token: jwt.sign({ id: user._id }, SECRET_KEY),
+        token: jwt.sign({ id: user._id }, config.server.secretKey),
       });
     }
   } catch (err) {
