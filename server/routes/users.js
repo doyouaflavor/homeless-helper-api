@@ -80,10 +80,40 @@ async function getProfile(req, res, next) {
   }
 }
 
+async function changePassword(req, res, next) {
+  if (!req.profile) {
+    next(createError(401));
+  }
+  console.log(req.profile);
+
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const user = await models.users.findOne({ _id: req.profile._id });
+    if (!user) {
+      next(createError(401));
+      return;
+    }
+    if (!bcrypt.compareSync(oldPassword, user.password)) {
+      next(createError(400));
+      return;
+    }
+
+    await models.users.updateOne({ _id: req.profile._id }, {
+      password: bcrypt.hashSync(newPassword),
+    });
+    res.send({
+      status: 'ok',
+    });
+  } catch (err) {
+    next(createError(500, null, err));
+  }
+}
+
 createDefaultUsers();
 
 router.post('/users/register', createUser);
 router.post('/users/login', authenticateUser);
 router.get('/users/me', getProfile);
+router.post('/users/chpasswd', changePassword);
 
 module.exports = router;
