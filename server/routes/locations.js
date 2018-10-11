@@ -16,12 +16,20 @@ async function getAllLocations(req, res, next) {
 async function createDefaultLocations() {
   try {
     const taipeiStation = await models.locations.findOne({ name: '台北車站' });
-
     if (!taipeiStation) {
       await models.locations.create({
         name: '台北車站',
         longitude: 121.517315,
         latitude: 25.047908,
+      });
+    }
+
+    const wanhuaStation = await models.locations.findOne({ name: '萬華車站' });
+    if (!wanhuaStation) {
+      await models.locations.create({
+        name: '萬華車站',
+        longitude: 121.499979,
+        latitude: 25.033622,
       });
     }
   } catch (err) {
