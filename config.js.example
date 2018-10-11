@@ -7,6 +7,9 @@ const config = {
     clientSecret: 'your-client-secrect',
     refreshToken: 'your-refresh-token',
   },
+  server: {
+    secretKey: 'your-secret-key',
+  },
 }
 
 module.exports = config
